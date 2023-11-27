@@ -48,9 +48,11 @@ export class TodoAddComponent {
   }
 
   ngOnInit() {
-    this.todoCategoryService
-      .getCategories()
-      .subscribe((category) => (this.categories = category));
+    this.subscription.add(
+      this.todoCategoryService
+        .getCategories()
+        .subscribe((category) => (this.categories = category))
+    );
   }
 
   onSave() {
