@@ -1,6 +1,6 @@
 export type Todo = {
   id: number;
-  categoryCode: number;
+  categoryId: number;
   categoryName: string;
   title: string;
   body: string;
@@ -9,7 +9,7 @@ export type Todo = {
 };
 
 export type TodoForm = {
-  categoryCode: number;
+  categoryId: number;
   title: string;
   body: string;
   state: number;

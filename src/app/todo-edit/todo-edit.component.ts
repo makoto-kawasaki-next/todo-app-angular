@@ -23,7 +23,7 @@ import { TodoForm } from '../model/todo';
 })
 export class TodoEditComponent {
   todoId: number;
-  categoryCode?: number;
+  categoryId?: number;
   categoryForm: FormControl;
   title: FormControl;
   body: FormControl;
@@ -55,11 +55,11 @@ export class TodoEditComponent {
 
   ngOnInit() {
     this.todoService.get(this.todoId).subscribe((todo) => {
-      this.categoryForm.setValue(todo.categoryCode);
+      this.categoryForm.setValue(todo.categoryId);
       this.title.setValue(todo.title);
       this.body.setValue(todo.body);
       this.stateForm.setValue(todo.stateCode);
-      this.categoryCode = todo.categoryCode;
+      this.categoryId = todo.categoryId;
       this.stateCode = todo.stateCode;
     });
     this.categoryService
@@ -73,13 +73,12 @@ export class TodoEditComponent {
   onSave() {
     const formData = this.todoForms.value;
     const todo: TodoForm = {
-      categoryCode: formData.categoryForm,
+      categoryId: formData.categoryForm,
       title: formData.title,
       body: formData.body,
       state: formData.stateForm,
     };
 
-    console.log(todo);
     this.todoService
       .update(this.todoId, todo)
       .subscribe((_) => this.router.navigateByUrl('/todo/list'));

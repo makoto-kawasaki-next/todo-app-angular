@@ -10,7 +10,7 @@
     <option
       *ngFor="let category of categories"
       ngValue="{{ category.id }}"
-      [selected]="category.id == categoryCode"
+      [selected]="category.id == categoryId"
     >
       {{ category.name }}
     </option>
