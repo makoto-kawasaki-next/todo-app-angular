@@ -1,0 +1,19 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {Todo} from "../todo";
+import {TodoService} from "../todo.service";
+import {HttpClient} from "@angular/common/http";
+
+@Component({
+  selector: 'app-todo-list',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './todo-list.component.html',
+  styleUrl: './todo-list.component.scss'
+})
+export class TodoListComponent {
+  todos: Todo[] = []
+  constructor(private todoService: TodoService) {
+    todoService.getTodos().subscribe(todos => this.todos = todos)
+  }
+}
