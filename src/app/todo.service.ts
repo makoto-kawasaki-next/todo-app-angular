@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
-import {Todo} from "./todo";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import { Todo, TodoForm } from './model/todo';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { apiBaseUrl } from '../const';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TodoService {
   todos: Todo[] = [];
-  private url = "http://127.0.0.1:9000"
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(`${this.url}/todo/list`)
+    return this.http.get<Todo[]>(`${apiBaseUrl}/todo/list`);
+  }
+
+  add(todo: TodoForm): Observable<object> {
+    return this.http.post<object>(`${apiBaseUrl}/todo/store`, todo);
   }
 }
