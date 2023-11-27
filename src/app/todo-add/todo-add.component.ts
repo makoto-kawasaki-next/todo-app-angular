@@ -12,6 +12,7 @@ import { TodoCategory } from '../model/todo-category';
 import { TodoStatus } from '../model/todo-status';
 import { Todo, TodoForm } from '../model/todo';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-todo-add',
@@ -23,6 +24,7 @@ import { Router } from '@angular/router';
 export class TodoAddComponent {
   categories: TodoCategory[] = [];
   status: TodoStatus[] = [];
+  private subscription = new Subscription();
 
   categoryId: FormControl;
   title: FormControl;
@@ -55,15 +57,23 @@ export class TodoAddComponent {
     if (this.todoForms.errors) return console.log(this.todoForms.errors);
     const formValue = this.todoForms.value;
     const todo: TodoForm = {
-      categoryId: formValue.categoryId ?? 0,
-      title: formValue.title ?? '',
-      body: formValue.body ?? '',
+      categoryId: formValue.categoryId!,
+      title: formValue.title!,
+      body: formValue.body!,
       // 新規作成時は必ず未実行（0）とする
       // 実際にはバックエンドで未実施を入れているが、Formを編集時と共通にするため初期値代入
-      state: formValue.state ?? 0,
+      state: 0,
     };
-    this.todoService
-      .add(todo)
-      .subscribe((res) => this.router.navigateByUrl('/todo/list'));
+    this.subscription.add(
+      this.todoService
+        .add(todo)
+        .subscribe(() => this.router.navigateByUrl('/todo/list'))
+    );
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }
