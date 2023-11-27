@@ -55,7 +55,7 @@ export class TodoAddComponent {
     if (this.todoForms.errors) return console.log(this.todoForms.errors);
     const formValue = this.todoForms.value;
     const todo: TodoForm = {
-      categoryId: formValue.categoryId ?? 0,
+      categoryCode: formValue.categoryId ?? 0,
       title: formValue.title ?? '',
       body: formValue.body ?? '',
       // 新規作成時は必ず未実行（0）とする

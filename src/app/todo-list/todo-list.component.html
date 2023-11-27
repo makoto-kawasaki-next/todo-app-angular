@@ -6,6 +6,7 @@
       <th scope="col">タイトル</th>
       <th scope="col">本文</th>
       <th scope="col">ステータス</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tr *ngFor="let todo of todos">
@@ -13,6 +14,15 @@
     <td>{{ todo.categoryName }}</td>
     <td>{{ todo.title }}</td>
     <td>{{ todo.body }}</td>
-    <td>{{ todo.state }}</td>
+    <td>{{ todo.stateName }}</td>
+    <td>
+      <a
+        class="icon-link"
+        routerLink="/todo/edit/{{ todo.id }}"
+        routerLinkActive="router-link-active"
+      >
+        <i class="bi bi-pencil-square"></i>
+      </a>
+    </td>
   </tr>
 </table>

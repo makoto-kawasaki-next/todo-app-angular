@@ -1,13 +1,15 @@
 export type Todo = {
   id: number;
+  categoryCode: number;
   categoryName: string;
   title: string;
   body: string;
-  state: string;
+  stateCode: number;
+  stateName: string;
 };
 
 export type TodoForm = {
-  categoryId: number;
+  categoryCode: number;
   title: string;
   body: string;
   state: number;

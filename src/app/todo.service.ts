@@ -15,7 +15,14 @@ export class TodoService {
     return this.http.get<Todo[]>(`${apiBaseUrl}/todo/list`);
   }
 
+  get(todoId: number): Observable<Todo> {
+    return this.http.get<Todo>(`${apiBaseUrl}/todo/${todoId}`);
+  }
   add(todo: TodoForm): Observable<object> {
     return this.http.post<object>(`${apiBaseUrl}/todo/store`, todo);
+  }
+
+  update(todoId: number, todo: TodoForm): Observable<object> {
+    return this.http.post<object>(`${apiBaseUrl}/todo/${todoId}/update`, todo);
   }
 }
