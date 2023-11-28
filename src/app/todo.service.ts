@@ -23,12 +23,10 @@ export class TodoService {
   }
 
   update(todoId: number, todo: TodoForm): Observable<object> {
-    return this.http.post<object>(`${apiBaseUrl}/todo/${todoId}/update`, todo);
+    return this.http.put<object>(`${apiBaseUrl}/todo/${todoId}`, todo);
   }
 
   delete(todoId: number): Observable<object> {
-    return this.http.post<object>(`${apiBaseUrl}/todo/delete`, {
-      todoId: todoId,
-    });
+    return this.http.delete<object>(`${apiBaseUrl}/todo/${todoId}`);
   }
 }
