@@ -1,0 +1,53 @@
+<form [formGroup]="todoForms" (ngSubmit)="onSave()">
+  <label for="category">カテゴリ</label>
+  <select
+    class="form-select"
+    aria-label="カテゴリ"
+    id="category"
+    formControlName="categoryForm"
+  >
+    <option value="undefined">選択してください</option>
+    <option
+      *ngFor="let category of categories"
+      ngValue="{{ category.id }}"
+      [selected]="category.id == categoryId"
+    >
+      {{ category.name }}
+    </option>
+  </select>
+  <p class="alert alert-warning" *ngIf="categoryForm.hasError('required')">
+    選択してください
+  </p>
+  <label for="title" class="form-label">タイトル</label>
+  <input type="txt" id="title" formControlName="title" class="form-control" />
+  <p class="alert alert-warning" *ngIf="title.hasError('required')">
+    入力してください
+  </p>
+
+  <label for="body" class="form-label">ボディー</label>
+  <input type="txt" id="body" formControlName="body" class="form-control" />
+  <p class="alert alert-warning" *ngIf="body.hasError('required')">
+    入力してください
+  </p>
+
+  <label for="status" class="form-label">ステータス</label>
+  <select
+    class="form-select"
+    aria-label="ステータス"
+    id="status"
+    formControlName="stateForm"
+  >
+    <option value="undefined">選択してください</option>
+    <option
+      *ngFor="let state of status"
+      ngValue="{{ state.code }}"
+      [selected]="state.code == stateCode"
+    >
+      {{ state.name }}
+    </option>
+  </select>
+
+  <button type="submit" class="btn btn-primary" [disabled]="todoForms.invalid">
+    登録
+  </button>
+</form>

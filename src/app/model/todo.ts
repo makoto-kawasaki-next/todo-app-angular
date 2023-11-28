@@ -1,9 +1,12 @@
+import { TodoCategory } from './todo-category';
+import { TodoStatus } from './todo-status';
+
 export type Todo = {
   id: number;
-  categoryName: string;
+  category: TodoCategory;
   title: string;
   body: string;
-  state: string;
+  state: TodoStatus;
 };
 
 export type TodoForm = {

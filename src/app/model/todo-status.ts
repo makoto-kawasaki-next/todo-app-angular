@@ -1,4 +1,4 @@
 export type TodoStatus = {
-  id: number;
+  code: number;
   name: string;
 };
