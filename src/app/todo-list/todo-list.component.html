@@ -23,6 +23,15 @@
       >
         <i class="bi bi-pencil-square"></i>
       </a>
+
+      <button
+        type="button"
+        (click)="delete(todo.id)"
+        class="btn btn-link"
+        style="padding: 0"
+      >
+        <i class="bi bi-trash"></i>
+      </button>
     </td>
   </tr>
 </table>
