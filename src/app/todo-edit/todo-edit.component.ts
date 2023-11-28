@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TodoCategory } from '../model/todo-category';
 import { TodoStatus } from '../model/todo-status';
 import { TodoForm } from '../model/todo';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-todo-edit',
@@ -22,6 +23,7 @@ import { TodoForm } from '../model/todo';
   styleUrl: './todo-edit.component.scss',
 })
 export class TodoEditComponent {
+  private subscription = new Subscription();
   todoId: number;
   categoryId?: number;
   categoryForm: FormControl;
@@ -54,20 +56,26 @@ export class TodoEditComponent {
   }
 
   ngOnInit() {
-    this.todoService.get(this.todoId).subscribe((todo) => {
-      this.categoryForm.setValue(todo.categoryId);
-      this.title.setValue(todo.title);
-      this.body.setValue(todo.body);
-      this.stateForm.setValue(todo.stateCode);
-      this.categoryId = todo.categoryId;
-      this.stateCode = todo.stateCode;
-    });
-    this.categoryService
-      .getCategories()
-      .subscribe((categories) => (this.categories = categories));
-    this.statusService
-      .getStatus()
-      .subscribe((status) => (this.status = status));
+    this.subscription.add(
+      this.todoService.get(this.todoId).subscribe((todo) => {
+        this.categoryForm.setValue(todo.categoryId);
+        this.title.setValue(todo.title);
+        this.body.setValue(todo.body);
+        this.stateForm.setValue(todo.stateCode);
+        this.categoryId = todo.categoryId;
+        this.stateCode = todo.stateCode;
+      })
+    );
+    this.subscription.add(
+      this.categoryService
+        .getCategories()
+        .subscribe((categories) => (this.categories = categories))
+    );
+    this.subscription.add(
+      this.statusService
+        .getStatus()
+        .subscribe((status) => (this.status = status))
+    );
   }
 
   onSave() {
@@ -79,8 +87,14 @@ export class TodoEditComponent {
       state: formData.stateForm,
     };
 
-    this.todoService
-      .update(this.todoId, todo)
-      .subscribe((_) => this.router.navigateByUrl('/todo/list'));
+    this.subscription.add(
+      this.todoService
+        .update(this.todoId, todo)
+        .subscribe((_) => this.router.navigateByUrl('/todo/list'))
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
