@@ -58,12 +58,12 @@ export class TodoEditComponent {
   ngOnInit() {
     this.subscription.add(
       this.todoService.get(this.todoId).subscribe((todo) => {
-        this.categoryForm.setValue(todo.categoryId);
+        this.categoryForm.setValue(todo.category.id);
         this.title.setValue(todo.title);
         this.body.setValue(todo.body);
-        this.stateForm.setValue(todo.stateCode);
-        this.categoryId = todo.categoryId;
-        this.stateCode = todo.stateCode;
+        this.stateForm.setValue(todo.state.code);
+        this.categoryId = todo.category.id;
+        this.stateCode = todo.state.code;
       })
     );
     this.subscription.add(
