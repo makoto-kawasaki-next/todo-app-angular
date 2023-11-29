@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Todo } from '../model/todo';
 import { TodoService } from '../todo.service';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-todo-list',
@@ -26,5 +26,11 @@ export class TodoListComponent {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  delete(todoId: number) {
+    this.subscription.add(
+      this.todoService.delete(todoId).subscribe((_) => this.ngOnInit())
+    );
   }
 }
